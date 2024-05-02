@@ -1,0 +1,129 @@
+ul { 
+    list-style: none;
+}
+
+.container {     
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;    
+    min-height: 97px;
+}
+/* Small Screens - Mobile */
+@media (min-width:768px) {
+    .container { 
+        width: 750px;
+    }    
+ 
+}
+
+
+/* Medium Screens */
+@media (min-width:992px) {    
+    .container { 
+        width: 970px;
+    }    
+    
+}
+
+
+/* Large Screens */
+@media (min-width:1200px) {
+    .container { 
+        width: 1170px;
+    }    
+}
+
+/* Header Section */
+header { 
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    background-color: #eee;
+}
+header { 
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+}
+header .container{ 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+header .container::after{
+    content: '';
+    background-color: #a2a2a2;
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 30px);
+    height: 1px;
+}
+header nav { 
+     flex: 1;
+     display: flex;
+     justify-content: flex-end;
+     align-items: center;
+}
+
+
+
+header a img { 
+    width: 60px;
+}
+
+header nav .toggle-menue { 
+    color: white;
+    font-size: 22px ;
+}
+
+/* over 768px   */
+@media (min-width: 768px) {
+    header nav button { 
+        display: none;
+    }    
+}
+header nav ul{
+    display: flex;  
+}
+/* from 0 to 767px - mobile screens*/
+@media (max-width: 767px) {
+    header nav ul { 
+        display: none;
+    }
+    
+    header nav button { 
+        visibility: visible;
+    }
+
+    header nav .toggle-menue:hover + ul { 
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: rgb(0 0 0 / 50%);
+    }
+    header nav .toggle-menue:hover + ul li a {
+        padding: 15px;
+    }
+}
+header nav ul li a { 
+    padding: 40px 10px;
+    display: block;
+    color: black;
+    text-decoration: none;
+    font-size: 14px  ;
+    transition: .3s;
+    position: relative;
+    z-index: 2;
+}
+
+header nav ul li a.active,
+header nav ul li a:hover{
+    color:#3DCCC7;
+    border-bottom: 1px solid var(--main-color);   
+}
