@@ -56,14 +56,7 @@ header .container{
     position: relative;
 }
 
-header .container::after{
-    content: '';
-    background-color: #a2a2a2;
-    position: absolute;
-    bottom: 0;
-    width: calc(100% - 30px);
-    height: 1px;
-}
+
 header nav { 
      flex: 1;
      display: flex;
@@ -99,16 +92,9 @@ header nav ul li a {
 
 
 
-.login-btn:hover{
-    background: #fff;
-    color: #57cc99
-}
-
-
 header nav ul li a.active,
 header nav ul li a:hover{
     color:#3DCCC7;
-    border-bottom: 1px solid var(--main-color);   
 }
 
 
@@ -118,9 +104,7 @@ header nav ul li a:hover{
         display: none;
     }
     
-    header nav button { 
-        display: none;
-    }
+    
     
     .login-btn { 
         padding: 40px 10px;
@@ -148,7 +132,6 @@ header nav ul li a:hover{
     
     
 }
-
 /* over 768px   */
 @media (min-width: 768px) {
     header nav .menu-icon{ 
@@ -174,5 +157,15 @@ header nav ul li a:hover{
         text-align: center;
         margin-left: 20px;
     }
+
+    .login-btn:hover{
+        background: #fff;
+        color: #57cc99 ; 
+        /* border:none ;  */
+    }
+    
+    /*  */
+    
+
 
 }

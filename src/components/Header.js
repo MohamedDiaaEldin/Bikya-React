@@ -25,7 +25,7 @@ const Header = ()=> {
 
                 <ul className={isOpen ?'display-menu':'' } >
                     <li><a className="active" href="#">Home</a></li>
-                    <li><a href="#services">How It Works</a></li>
+                    <li><a href="#howItWorks">How It Works</a></li>
                     <li><a href="#portfolio">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                     <li><a href="#login"  className='login-btn'>Login</a> </li>
