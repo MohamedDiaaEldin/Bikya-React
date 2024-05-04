@@ -1,0 +1,112 @@
+
+*{
+    box-sizing: border-box;
+}
+.heading { 
+    padding: 100px;
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 60px;
+    text-transform: uppercase;
+    color: #57cc99;
+}
+
+.toggle-btns { 
+    display: flex;
+    justify-content: center;
+}
+.toggle-btns {
+    display: flex;
+}
+  
+.toggle-btns button {
+    min-width: 100px;
+    height: 40px;
+    color: #57cc99;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    z-index: 0;
+    overflow: hidden;
+    border: 2px solid #57cc99;
+    background: #fff;
+    margin-bottom: 60px;
+  }
+.toggle-btns button:last-of-type {
+    margin-left: 20px;
+}
+  .toggle-btns button.active {
+    background: #57cc99;
+    color: #fff;
+  }
+  
+  .toggle-btns button:hover,
+  .toggle-btns button.active:hover {
+    color: #fff;
+  }
+  
+  .toggle-btns button:hover:after,
+  .toggle-btns button.active:hover:after {
+    width: 100%;
+  }
+  
+  .toggle-btns button:after,
+  .toggle-btns button.active:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    transition: all 0.3s ease;
+    right: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background: #57cc99;
+  }
+  
+/* 
+.content-container{    
+    margin-top: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap:25% ; 
+    flex-wrap: wrap;
+} */
+
+
+.content-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+  
+  .content-container > div {
+    margin: 10px;
+    flex: 1 0 300px; /* Adjust the width as needed */
+}
+  
+/* Apply styles to ContentBox components */
+.ContentBox {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+  
+/* Media query for responsive layout */
+@media (max-width: 768px) {
+    .content-container > div {
+      flex-basis: calc(60% - 20px);
+    }
+}
+  
+@media (max-width: 480px) {
+    .content-container > div {
+      flex-basis: 100%;
+    }
+}
+  

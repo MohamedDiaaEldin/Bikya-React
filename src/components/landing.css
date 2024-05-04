@@ -5,5 +5,15 @@
     background-size: cover;
     background-color: #1f2021;
     position: relative;
+    width: 100%; 
 }
 /* End of Landing Section */
+@media only screen and (max-width: 768px) {
+    .landing {
+      /* Adjust size or any other styles for mobile screens */
+      width: 100%;       
+      height: auto;
+    }
+ }
+
+

@@ -1,3 +1,6 @@
+*{
+    box-sizing: border-box;
+}
 ul { 
     list-style: none;
 }
@@ -79,38 +82,10 @@ header nav .toggle-menue {
     font-size: 22px ;
 }
 
-/* over 768px   */
-@media (min-width: 768px) {
-    header nav button { 
-        display: none;
-    }    
-}
 header nav ul{
     display: flex;  
 }
-/* from 0 to 767px - mobile screens*/
-@media (max-width: 767px) {
-    header nav ul { 
-        display: none;
-    }
-    
-    header nav button { 
-        visibility: visible;
-    }
 
-    header nav .toggle-menue:hover + ul { 
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: rgb(0 0 0 / 50%);
-    }
-    header nav .toggle-menue:hover + ul li a {
-        padding: 15px;
-    }
-}
 header nav ul li a { 
     padding: 40px 10px;
     display: block;
@@ -122,8 +97,82 @@ header nav ul li a {
     z-index: 2;
 }
 
+
+
+.login-btn:hover{
+    background: #fff;
+    color: #57cc99
+}
+
+
 header nav ul li a.active,
 header nav ul li a:hover{
     color:#3DCCC7;
     border-bottom: 1px solid var(--main-color);   
+}
+
+
+/* from 0 to 767px - mobile screens*/
+@media (max-width: 767px) {
+    header nav ul { 
+        display: none;
+    }
+    
+    header nav button { 
+        display: none;
+    }
+    
+    .login-btn { 
+        padding: 40px 10px;
+        display: block;
+        color: black;
+        text-decoration: none;
+        font-size: 14px  ;
+        transition: .3s;
+        position: relative;
+        z-index: 2;
+    }
+    .display-menu { 
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: rgb(0 0 0 / 50%);
+    }
+    header nav .toggle-menue:hover + ul li a {
+        padding: 15px;
+    }
+    
+    
+    
+}
+
+/* over 768px   */
+@media (min-width: 768px) {
+    header nav .menu-icon{ 
+        display: none;
+    }    
+    
+    .login-btn{
+        min-width: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        color: #fff;
+        margin-top: 33px;
+        padding: 5px 10px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        outline: none;
+        border-radius: 5px;
+        border: 2px solid #57cc99;
+        background: #57cc99;
+        text-align: center;
+        margin-left: 20px;
+    }
+
 }

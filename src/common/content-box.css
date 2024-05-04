@@ -1,0 +1,25 @@
+.box {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 50px;
+    height: 200px; /* Set a fixed height */
+}
+
+.number-icon {
+    font-size: 24px;
+    color: #57cc99; /* You can change the color as desired */
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 16px;
+    color: #333;
+}
