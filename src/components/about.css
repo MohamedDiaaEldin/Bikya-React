@@ -1,0 +1,35 @@
+.heading { 
+    padding: 100px;
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 60px;
+    text-transform: uppercase;
+    color: #57cc99;
+}
+
+
+.about { 
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+.about img { 
+    width: 600px;
+    max-width: 100%;
+}
+.about p { 
+    padding: 100px;
+    font-size: 20px;
+    color: #333;
+}
+
+@media (max-width:1200px) {
+    .about{ 
+        flex-direction: row-reverse;
+        flex-wrap: wrap;        
+    }
+    .about p { 
+        padding: 10px 30px ;
+        /* text-align: center; */
+    }
+}

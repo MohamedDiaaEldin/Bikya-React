@@ -74,12 +74,13 @@
 .content-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: center;    
 }
   
-  .content-container > div {
+.content-container > div {
     margin: 10px;
-    flex: 1 0 300px; /* Adjust the width as needed */
+    flex: 1 0 350px; 
+
 }
   
 .ContentBox {
@@ -87,15 +88,8 @@
     padding: 20px;
     margin-bottom: 20px;
 }
-  
-/* Media query for responsive layout */
 
-@media (max-width: 768px) {
-    .content-container > div {
-      flex-basis: calc(60% - 20px);
-    }
-}
-  
+/* Small Screens */
 @media (max-width: 480px) {
     .content-container > div {
       flex-basis: 100%;
