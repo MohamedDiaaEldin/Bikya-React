@@ -1,17 +1,20 @@
-import Header from './components/Header'
-import Landing from './components/Landing';
-import HowItWorks from './components/HowItWorks';
-import About from './components/About';
-import Footer from './components/Footer';
+import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import Home from "./components/Home";
+import Main from "./components/Main";
+import Login from "./components/Login";
+
+
+
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
   return (
-    <>
-      <Header/>
-      <Landing/>
-      <HowItWorks/>
-      <About/>
-      <Footer/>
-    </>
+    <Routes>
+      <Route path="/" element={<Home/>} />
+
+      <Route path="/login" element={isLoggedIn ? <Main/> :  <Login/>} />
+    </Routes>
   )
 }
 

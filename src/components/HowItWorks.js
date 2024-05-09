@@ -9,7 +9,6 @@ const HowItWorks = ()=> {
         setActiveTab(tab);
     };
 
-    console.log('how it works reloaded with ', activeTab, ' state')
     return (  
         < div id='howItWorks'>
             <h2 className='heading'>How It Works</h2>
