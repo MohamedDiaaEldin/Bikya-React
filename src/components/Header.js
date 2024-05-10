@@ -8,8 +8,6 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 const Header = ()=> {
     const [activeTab, setActiveTab] = useState('home')
 
-    // console.log('Component is loaded')
-
     const linksClickHandler = (itemID)=> { 
         setActiveTab(itemID)
     }
@@ -28,8 +26,7 @@ const Header = ()=> {
                     <li><a onClick={()=> linksClickHandler('how-it-works')} className={activeTab ==='how-it-works' ? "active" : ""} href="#howItWorks">How It Works</a></li>
                     <li><a onClick={()=> linksClickHandler('about')} className={activeTab ==='about' ? "active" : ""} href="#about">About</a></li>
                     <li><a onClick={()=> linksClickHandler('contact')} className={activeTab ==='contact' ? "active" : ""} href="#footer">Contact</a></li>
-                    <li><a href="/login"  className='login-btn'>Login</a> </li>
-                    
+                    <li><a href="/login"  className='login-btn'>Login</a> </li>  
                 </ul>                
             </nav>   
         </div>

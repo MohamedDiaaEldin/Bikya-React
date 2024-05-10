@@ -1,7 +1,7 @@
 .login-container {
     max-width: 400px;
     margin: 100px auto;
-    height: 70vh;
+    height: 60vh;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -9,6 +9,8 @@
 
 .login-container h2 {
     text-align: center;
+    margin-bottom: 30px;
+    color: #57cc99;
 }
 
 .login-container form {
@@ -24,29 +26,58 @@
     font-weight: bold;
 }
 
-.login-container form input{
+.login-container form input {
     width: 100%;
-    padding: 8px;
+    padding: 12px; 
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 5px;
 }
 
-.login-container form input.invalid { 
-    border-color: red;
+.login-container form input.invalid {
+    border-color: #FF474C
 }
+
 .login-container form button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
+    padding: 12px 20px;
+    background-color: #57cc99;
     color: #fff;
     border: none;
-    border-radius: 3px;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.login-container form .forget-password {
+    align-self: flex-end;
+    margin: 20px 0;
+    font-size: 14px; 
+    color: #555; 
+}
+
+.login-container form button:hover {
+    background-color: #2aad74;
 }
 
 .login-container form button:disabled {
-    background-color: #b3b3b3;
+    background-color: #ccc;
     cursor: not-allowed;
+}
+
+.login-container .login {
+    margin-bottom: 20px;
+}
+
+.login-container .sign-up {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.login-container .sign-up a {
+    margin-left: 10px; 
+    color: #57cc99; 
+    text-decoration: none;
+    font-size: 14px; 
 }
 
 @media (max-width: 768px) {

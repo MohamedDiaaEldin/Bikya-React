@@ -11,9 +11,9 @@ function App() {
   
   return (
     <Routes>
-      <Route path="/" element={<Home/>} />
+      <Route path="/" element={<Home isLoggedIn/>} />
 
-      <Route path="/login" element={isLoggedIn ? <Main/> :  <Login/>} />
+      <Route path="/login" element={isLoggedIn ? <Main/> :  <Login setIsLoggedIn={setIsLoggedIn}/>} />
     </Routes>
   )
 }
