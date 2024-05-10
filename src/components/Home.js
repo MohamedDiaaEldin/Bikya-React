@@ -4,10 +4,10 @@ import HowItWorks from '../components/HowItWorks';
 import About from '../components/About';
 import Footer from '../components/Footer';
 
-function Home() {
+function Home({isLoggedIn}) {
   return (
     <>
-      <Header/>
+      <Header isLoggedIn={isLoggedIn}/>
       <Landing/>
       <HowItWorks/>
       <About/>
