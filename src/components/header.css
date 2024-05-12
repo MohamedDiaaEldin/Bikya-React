@@ -70,7 +70,7 @@ header a img {
     width: 60px;
 }
 
-header nav .toggle-menue { 
+header nav .display-menu { 
     color: white;
     font-size: 22px ;
 }
@@ -81,7 +81,6 @@ header nav ul{
 
 header nav ul li a { 
     padding: 40px 10px;
-    display: block;
     color: black;
     text-decoration: none;
     font-size: 14px  ;
@@ -97,13 +96,21 @@ header nav ul li a:hover{
     color:#3DCCC7;
 }
 
+.display-menu-mobile { 
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: rgb(0 0 0 / 50%);
+}
 
 /* from 0 to 767px - mobile screens*/
 @media (max-width: 767px) {
     header nav ul { 
         display: none;
     }
-    
     
     
     .login-btn { 
@@ -116,16 +123,12 @@ header nav ul li a:hover{
         position: relative;
         z-index: 2;
     }
-    .display-menu { 
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: rgb(0 0 0 / 50%);
+
+    header nav ul li a { 
+        display: block;
     }
-    header nav .toggle-menue:hover + ul li a {
+    header nav .display-menu:hover + ul li a {
+    
         padding: 15px;
     }
     
@@ -145,7 +148,7 @@ header nav ul li a:hover{
         align-items: center;
         height: 40px;
         color: #fff;
-        margin-top: 33px;
+        /* margin-top: 33px; */
         padding: 5px 10px;
         font-weight: bold;
         cursor: pointer;

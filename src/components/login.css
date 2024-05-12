@@ -1,3 +1,9 @@
+
+.arrow{
+    color: #2aad74;
+    font-size: 17px;
+    margin-left: 5px;
+}
 .login-container {
     max-width: 400px;
     margin: 100px auto;

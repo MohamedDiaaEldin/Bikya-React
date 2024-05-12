@@ -1,20 +1,27 @@
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
 import Home from "./components/Home";
 import Main from "./components/Main";
 import Login from "./components/Login";
-
-
+import { AuthenticationContextProvider, useAuthAppContext } from "./AuthenticationContextProvider";
+import { useState } from "react";
+// 
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const {isLoggedIn} = useAuthAppContext()
+  const [isLoading, setIsLoading] = useState(false)
   
   return (
-    <Routes>
-      <Route path="/" element={<Home isLoggedIn/>} />
+    <AuthenticationContextProvider>
+      <Routes>
+        <Route path="/" element={<Home/>} />        
+        <Route path="/login" element={<Login/>}/>
+        <Route path='/main' element={<Main/>} />
+      </Routes>
+      
+    </AuthenticationContextProvider>
+  
 
-      <Route path="/login" element={isLoggedIn ? <Main/> :  <Login setIsLoggedIn={setIsLoggedIn}/>} />
-    </Routes>
+    
   )
 }
 
