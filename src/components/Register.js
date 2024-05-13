@@ -38,32 +38,27 @@ const Rejecter = () => {
   const navigate = useNavigate();
 
   const emailRef = useRef('');
+  
   const passwordRef = useRef('');
   const confirmPasswordRef = useRef('');
   const phoneRef = useRef('');
   const addressRef = useRef('');
 
   useEffect(() => {
-    if (
-      emailRef.current.value.length > 0 ||
-      passwordRef.current.value.length > 0 ||
-      confirmPasswordRef.current.value.length > 0 ||
-      phoneRef.current.value.length > 0 ||
-      addressRef.current.value.length > 0
-    ) {
-      emailOnBlurHandler();
-      passwordOnBlurHandler();
-      confirmPasswordOnBlurHandler();
-      phoneOnBlurHandler();
-      addressOnBlurHandler();
-    }
-  }, [
-    emailRef,
-    passwordRef,
-    confirmPasswordRef,
-    phoneRef,
-    addressRef,
-  ]);
+    console.log('useEffect')
+        // Delay validation by 500 milliseconds after component mounts
+        const delay = setTimeout(() => {
+          console.log('timeout')
+          emailOnBlurHandler(); // Assuming you have a function to handle email validation onBlur
+          phoneOnBlurHandler()
+        }, 4500); // Adjust the delay as needed
+    
+        // Cleanup function to clear the timeout when the component unmounts
+        return () => {
+          clearTimeout(delay)
+          console.log('cleared')
+        };
+  }, []);
 
   const isValidForm =
     state.isValidEmail &&
@@ -86,7 +81,8 @@ const Rejecter = () => {
   };
 
   const phoneOnBlurHandler = () => {
-    const pattern = /^\d{11}$/;
+    const pattern = /^(?:\+?20|0)?(\d{10})$/;
+    console.log(pattern.test(phoneRef.current.value))
     dispatch({ type: 'PHONE', isValid: pattern.test(phoneRef.current.value) });
   };
 
@@ -97,28 +93,24 @@ const Rejecter = () => {
   const handleSignup = async () => {
     setIsLoading(true);
     try {
-      const response = await makeHTTP('/register', {
+      const response = await makeHTTP('/send_otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email: emailRef.current.value,
-          password: passwordRef.current.value,
-          confirmPassword: confirmPasswordRef.current.value,
-          phone: phoneRef.current.value,
-          address: addressRef.current.value,
         }),
       });
       if (!response.ok) {
-        throw new Error('Signup failed');
+        throw new Error('Sending OTP failed');
       }
       setError('');
-      console.log('Signup successful');
+      console.log('OTP sent successfully');
       setIsLoading(false);
     } catch (error) {
       console.error('Error:', error.message);
-      setError('Signup failed. Please try again.');
+      setError('Sending OTP failed. Please try again.');
       setIsLoading(false);
     }
   };
@@ -135,6 +127,7 @@ const Rejecter = () => {
       <form>
         <div>
           <input
+          autoComplete='email'
             placeholder="Email"
             type="email"
             onBlur={emailOnBlurHandler}
@@ -144,6 +137,7 @@ const Rejecter = () => {
         </div>
         <div>
           <input
+          autoComplete='new-password'
             placeholder="Password"
             type="password"
             onBlur={passwordOnBlurHandler}
@@ -153,6 +147,7 @@ const Rejecter = () => {
         </div>
         <div>
           <input
+          autoComplete='new-password'
             placeholder="Confirm Password"
             type="password"
             onBlur={confirmPasswordOnBlurHandler}
@@ -162,6 +157,7 @@ const Rejecter = () => {
         </div>
         <div>
           <input
+          autoComplete='address-level1'
             placeholder="Address"
             type="text"
             onBlur={addressOnBlurHandler}
@@ -171,6 +167,7 @@ const Rejecter = () => {
         </div>
         <div>
           <input
+          autoComplete='tel'
             placeholder="Phone Number"
             type="tel"
             onBlur={phoneOnBlurHandler}
