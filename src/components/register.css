@@ -4,50 +4,46 @@
     font-size: 17px;
     margin-left: 5px;
 }
-
 .arrow:hover{
     cursor: pointer;
 }
-.login-container {
-    max-width: 400px;
+.signup-container {
+    max-width: 450px;
     margin: 100px auto;
-    height: 60vh;
+    height: 75vh;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.login-container h2 {
+.signup-container h2 {
     text-align: center;
     margin-bottom: 30px;
     color: #57cc99;
 }
 
-.login-container form {
+.signup-container form {
     display: flex;
     flex-direction: column;
 }
 
-.login-container form div {
+.signup-container form div {
     margin-bottom: 10px;
 }
 
-.login-container form label {
-    font-weight: bold;
-}
 
-.login-container form input {
+.signup-container form input {
     width: 100%;
     padding: 12px; 
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.login-container form input.invalid {
+.signup-container form input.invalid {
     border-color: #FF474C
 }
 
-.login-container form button {
+.signup-container form button {
     padding: 12px 20px;
     background-color: #57cc99;
     color: #fff;
@@ -56,34 +52,35 @@
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
+    margin-top: 30px;
 }
 
-.login-container form .forget-password {
+.signup-container form .forget-password {
     align-self: flex-end;
     margin: 20px 0;
     font-size: 14px; 
     color: #555; 
 }
 
-.login-container form button:hover {
+.signup-container form button:hover {
     background-color: #2aad74;
 }
 
-.login-container form button:disabled {
+.signup-container form button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
 
-.login-container .login {
+.signup-container .login {
     margin-bottom: 20px;
 }
 
-.login-container .sign-up {
+.signup-container .sign-up {
     display: flex;
     margin-bottom: 20px;
 }
 
-.login-container .sign-up a {
+.signup-container .sign-up a {
     margin-left: 10px; 
     color: #57cc99; 
     text-decoration: none;
@@ -91,7 +88,25 @@
 }
 
 @media (max-width: 768px) {
-    .login-container {
+    .signup-container {
         max-width: 300px;
+    }
+
+    .signup-container form input {
+        padding: 11px;
+    }
+    /*     padding: 12px 20px;
+    background-color: #57cc99;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 30px; */
+    .signup-container form button {
+        font-size: 14px;
+        width: 80%;
+        margin-left: 18px;
     }
 }
