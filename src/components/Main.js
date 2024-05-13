@@ -13,25 +13,22 @@ const Main = () => {
             navigate('/login')
         }
     })
-    const getDataClickHandler = async ()=> { 
-        const url = 'http://localhost:5000/data'; // Replace with your actual API endpoint
+    // const getDataClickHandler = async ()=> { 
+    //     const url = 'http://localhost:5000/data'; 
     
-    
-    
-        const response =   await fetch(url, {
-            method: 'GET', 
-            credentials: 'include'
-        })
+    //     const response =   await fetch(url, {
+    //         method: 'GET', 
+    //         credentials: 'include'
+    //     })
         
 
-        console.log({response})
+    //     console.log({response})
     
-    }
+    // }
     return (
         <>        
             <Header/>
             <h3>user area</h3>
-            <button onClick={getDataClickHandler}>Make Request</button>
         </>
     )
 }

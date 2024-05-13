@@ -11,6 +11,7 @@ const Header = ()=> {
     const [activeTab, setActiveTab] = useState('home')
     const {isLoggedIn, setIsLoggedIn} = useAuthAppContext()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [isSeller, setIsSeller] = useState(true)
 
     const navigate = useNavigate()
 
@@ -27,8 +28,10 @@ const Header = ()=> {
         }
     }
     const navClickHandler = ()=> {
-
         setIsMenuOpen(!isMenuOpen)
+    }
+    const switchClickHandler  = ()=> { 
+        setIsSeller(!isSeller)
     }
     return (
         < header >
@@ -46,10 +49,13 @@ const Header = ()=> {
                     {isLoggedIn ? '' :<li><a onClick={()=> linksClickHandler('how-it-works')} className={activeTab ==='how-it-works' ? "active" : ""} href="#howItWorks">How It Works</a></li>}
                     {isLoggedIn ? '' :<li><a onClick={()=> linksClickHandler('about')} className={activeTab ==='about' ? "active" : ""} href="#about">About</a></li>}
                     {isLoggedIn ? '' :<li><a onClick={()=> linksClickHandler('contact')} className={activeTab ==='contact' ? "active" : ""} href="#footer">Contact</a></li>}
-                    {isLoggedIn ? '' :<li><a onClick={()=> linksClickHandler('contact')} className={activeTab ==='contact' ? "active" : ""} href="#footer">Contact</a></li>}
                     
-                    {!isLoggedIn ? '' :<li><a  className='login-btn' href="/main">orders</a></li>}
-                    <li onClick={authClickHandler}><a  className='login-btn'>{isLoggedIn? 'Logout' : 'Login'}</a> </li>  
+                    {/* switch between seller and buyer */}
+                    {isLoggedIn ? <li><a onClick={switchClickHandler} className='btn' >switch to {isSeller ? 'buyer' : 'seller'}</a></li> : ''}
+
+
+                    {/* login and logout  */}
+                    <li onClick={authClickHandler}><a  className='btn'>{isLoggedIn? 'Logout' : 'Login'}</a> </li>  
                 </ul>                
             </nav>   
         </div>
