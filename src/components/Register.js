@@ -5,8 +5,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import makeHTTP from '../utils/httpRequest';
 import Loading from '../common/Loading';
 import { useNavigate } from 'react-router-dom';
+import Message from './Message';
+
+
+const MessageOverlay = ({ children }) => {
+  return (
+      <div className="message-overlay">
+          {children}
+      </div>
+  );
+};
 
 const initialState = {
+  isValidName: false,
   isValidEmail: false,
   isValidPassword: false,
   isValidConfirmPassword: false,
@@ -16,6 +27,8 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'NAME':
+      return { ...state, isValidName: action.isValid };
     case 'EMAIL':
       return { ...state, isValidEmail: action.isValid };
     case 'PASSWORD':
@@ -35,16 +48,33 @@ const Rejecter = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  // 
   const navigate = useNavigate();
-
-  const emailRef = useRef('');
-  
+  // 
+  const nameRef = useRef('');  
+  const emailRef = useRef('');  
   const passwordRef = useRef('');
   const confirmPasswordRef = useRef('');
   const phoneRef = useRef('');
   const addressRef = useRef('');
+  // 
+  const [showOtpInput, setShowOtpInput] = useState(false);
+  const [isValidOTP , setIsValidOTP]  = useState(true)
 
   useEffect(() => {
+
+    const savedName = localStorage.getItem('name');
+    const savedEmail = localStorage.getItem('email');
+    const savedPassword = localStorage.getItem('password');
+    const savedAddress = localStorage.getItem('address');
+    const savedPhone = localStorage.getItem('phone');
+
+    if (savedEmail) emailRef.current.value = savedEmail;
+    if (savedPassword) passwordRef.current.value = savedPassword;
+    if (savedAddress) addressRef.current.value = savedAddress;
+    if (savedPhone) phoneRef.current.value = savedPhone;
+
+
     console.log('useEffect')
         // Delay validation by 500 milliseconds after component mounts
         const delay = setTimeout(() => {
@@ -60,7 +90,7 @@ const Rejecter = () => {
         };
   }, []);
 
-  const isValidForm =
+    const isValidForm =
     state.isValidEmail &&
     state.isValidPassword &&
     state.isValidConfirmPassword &&
@@ -89,9 +119,14 @@ const Rejecter = () => {
   const addressOnBlurHandler = () => {
     dispatch({ type: 'ADDRESS', isValid: addressRef.current.value.trim().length > 0 });
   };
+  const nameOnBlurHandler = () => {
+    dispatch({ type: 'NAME', isValid: addressRef.current.value.trim().length > 0 });
+  };
 
+  
   const handleSignup = async () => {
     setIsLoading(true);
+    
     try {
       const response = await makeHTTP('/send_otp', {
         method: 'POST',
@@ -103,17 +138,62 @@ const Rejecter = () => {
         }),
       });
       if (!response.ok) {
+        /// show error message
         throw new Error('Sending OTP failed');
       }
+      
+      localStorage.setItem('name', nameRef.current.value);
+      localStorage.setItem('email', emailRef.current.value);
+      localStorage.setItem('password', passwordRef.current.value);
+      localStorage.setItem('address', addressRef.current.value);
+      localStorage.setItem('phone', phoneRef.current.value);
+      
       setError('');
-      console.log('OTP sent successfully');
+      console.log('OTP sent successfully');      
       setIsLoading(false);
+      setShowOtpInput(true)
     } catch (error) {
       console.error('Error:', error.message);
       setError('Sending OTP failed. Please try again.');
       setIsLoading(false);
     }
   };
+  const handleOtpSubmit = async (otp) => {
+    if (otp.length !== 6){
+      console.log('Enter Valid OTP')
+      return 
+    }
+
+    
+    const response = await makeHTTP('/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: nameRef.current.value,
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+        address: addressRef.current.value,
+        phone: addressRef.current.value,
+        otp: otp
+      }),
+    })
+    if (!response.ok) {
+      // Show Message Wrong OTP
+      setIsValidOTP(false)
+      console.log('InValid OTP')
+    }
+    else { 
+      // show email created successfully
+      console.log('email created successfully')
+    }
+    
+};
+
+const handleCancelMessage = ()=>{
+  setShowOtpInput(false)
+}
 
   const backClickHandler = () => {
     navigate('/login');
@@ -125,6 +205,16 @@ const Rejecter = () => {
       <FontAwesomeIcon onClick={backClickHandler} className="arrow" icon={faArrowLeft} />
       <h2>Sign Up</h2>
       <form>
+        <div>
+          <input
+          autoComplete='name'
+            placeholder="Name"
+            type="text"
+            onBlur={nameOnBlurHandler}
+            ref={nameRef}
+            className={!state.isValidEmail ? 'invalid' : ''}
+          />
+        </div>        
         <div>
           <input
           autoComplete='email'
@@ -176,10 +266,21 @@ const Rejecter = () => {
           />
         </div>
         {error && <p className="error-message">{error}</p>}
-        <button className="login" disabled={!isValidForm} type="button" onClick={handleSignup}>
+        <button className="btn" disabled={!isValidForm} type="button" onClick={handleSignup}>
           Sign Up
         </button>
+
       </form>
+        {showOtpInput && (
+            <MessageOverlay>
+                <Message                    
+                    text="An OTP has been sent to your email. Please enter it below."                 
+                    onClick={handleOtpSubmit}         
+                    onCancel={handleCancelMessage}   
+                    isValidOTP={isValidOTP}        
+                />
+            </MessageOverlay>
+        )}
     </div>
   );
 };

@@ -21,132 +21,99 @@ const reducer = (state, action) => {
             return state;
     }
 };
-
 function Login() {
-    const { isLoggedIn, setIsLoggedIn}  = useAuthAppContext()
+    const { isLoggedIn, setIsLoggedIn } = useAuthAppContext();
     const [state, dispatch] = useReducer(reducer, initialState);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
 
     const userNameRef = useRef('');
     const passwordRef = useRef('');
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    useEffect(()=>{
-        if (isLoggedIn){
-            navigate('/')
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate('/');
         }
-        if (userNameRef.current.value.length > 0 || passwordRef.current.value.length > 0){
-            console.log('Yes')
-            userNameOnBlurHandler()
-            passwordOnBlurHandler()
-        }
+    }, [isLoggedIn, navigate]);
 
-    }, [userNameRef, passwordRef])
+    const isValidForm = state.isValidPassword && state.isValidUserName;
 
-
-    const isValidForm = state.isValidPassword && state.isValidUserName
-
-    const userNameOnBlurHandler = () => {
-        console.log('email blured')
+    const handleUserNameBlur = () => {
         const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         dispatch({ type: 'USERNAME', isValid: pattern.test(userNameRef.current.value) });
     };
 
-    const passwordOnBlurHandler = () => {
+    const handlePasswordBlur = () => {
         dispatch({ type: 'PASSWORD', isValid: passwordRef.current.value.trim().length > 0 });
     };
 
-    const handleLogin = () => {
-        setIsLoading(true)   
-        loginUser(userNameRef.current.value, passwordRef.current.value).then(response =>  { 
-            console.log(response.headers)
-            if ( !response.ok) { 
-                console.log('Wrong Email or Password')
-            }
-            else { 
-                console.log('Correct Credentials')
-                setIsLoggedIn(true)
-                navigate('/main')                
-            }
-            console.log('dismissing the backlog')
-            // Show Wrong Email or Password
-            setIsLoading(false)
-            
-        }).catch(error=>{
-            console.log('Sending HTTP Error: ', error)
-        })
-        
-        // show loading bar 
-        // if 200 : go to user area else show error message
-
-    };
-    const loginUser = (username, password) => {        
-        const data = {
-            email: username,
-            password: password
-        };
-    
-        const options  = {
+    const handleLogin = (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        const username = userNameRef.current.value;
+        const password = passwordRef.current.value;
+        const data = { email: username, password };
+        const options = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data), 
-            credentials : 'include'
-            
-        }
-        return makeHTTP('/login', options)        
+            body: JSON.stringify(data),
+            credentials: 'include'
+        };
+        makeHTTP('/login', options)
+            .then(response => {
+                if (!response.ok) {
+                    console.log('Wrong Email or Password');
+                } else {
+                    console.log('Correct Credentials');
+                    setIsLoggedIn(true);
+                    navigate('/main');
+                }
+                setIsLoading(false);
+            })
+            .catch(error => {
+                console.log('Sending HTTP Error: ', error);
+                setIsLoading(false);
+            });
+    };
 
-    }
-    
-    
-    const backClickHandler = ()=> { 
-        navigate('/')
-    }
+    const backClickHandler = () => {
+        navigate('/');
+    };
 
     return (
         <div className="login-container">
-            {/* Loading */}
-            {isLoading ? <Loading/> : ''}
-            {/*  */}
-        
+            {isLoading && <Loading />}
             <FontAwesomeIcon onClick={backClickHandler} className='arrow' icon={faArrowLeft} />
             <h2>Welcome Back</h2>
-
-            <form>
+            <form onSubmit={handleLogin}>
                 <div>
                     <input
                         placeholder='Email'
                         type="text"
                         autoComplete='username'
-                        onBlur={userNameOnBlurHandler}
+                        onBlur={handleUserNameBlur}
                         ref={userNameRef}
                         className={!state.isValidUserName ? 'invalid' : ''}
                     />
                 </div>
                 <div>
-                    
                     <input
                         placeholder='Password'
                         type="password"
                         autoComplete='current-password'
-                        
                         ref={passwordRef}
                         className={!state.isValidPassword ? 'invalid' : ''}
-                        onBlur={passwordOnBlurHandler}
+                        onBlur={handlePasswordBlur}
                     />
                 </div>
-                
-                
-                <a className='forget-password' href="">Forget Password?</a>                
-                
-               
-                <button className='login' disabled={!isValidForm} type="button" onClick={handleLogin}>Login</button>
-
+                <a className='forget-password' href="">Forget Password?</a>
+                <button className='login' disabled={!isValidForm} type="submit">Login</button>
                 <div className='sign-up'>
                     <p>Don't have account ?</p>
                     <a href="/rejecter">sign up</a>
-                </div>                
+                </div>
             </form>
         </div>
     );
