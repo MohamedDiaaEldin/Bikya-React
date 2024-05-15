@@ -6,6 +6,7 @@ import makeHTTP from '../utils/httpRequest';
 import Loading from '../common/Loading';
 import { useNavigate } from 'react-router-dom';
 import Message from './Message';
+import MessageModal from '../common/MessageModal';
 
 
 const MessageOverlay = ({ children }) => {
@@ -45,6 +46,7 @@ const reducer = (state, action) => {
 };
 
 const Rejecter = () => {
+
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -60,7 +62,9 @@ const Rejecter = () => {
   // 
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [isValidOTP , setIsValidOTP]  = useState(true)
-
+  // Simple Message Modal State
+  const [showMessageModal, setShowMessageModal] = useState(false) ;
+  let [modelMessage, setModelMessage] = useState(false)
   useEffect(() => {
 
     const savedName = localStorage.getItem('name');
@@ -69,6 +73,7 @@ const Rejecter = () => {
     const savedAddress = localStorage.getItem('address');
     const savedPhone = localStorage.getItem('phone');
 
+    if (savedName) nameRef.current.value = savedName;
     if (savedEmail) emailRef.current.value = savedEmail;
     if (savedPassword) passwordRef.current.value = savedPassword;
     if (savedAddress) addressRef.current.value = savedAddress;
@@ -85,12 +90,13 @@ const Rejecter = () => {
     
         // Cleanup function to clear the timeout when the component unmounts
         return () => {
-          clearTimeout(delay)
+          clearTimeout(delay)          
           console.log('cleared')
         };
   }, []);
 
     const isValidForm =
+    state.isValidName &&
     state.isValidEmail &&
     state.isValidPassword &&
     state.isValidConfirmPassword &&
@@ -119,8 +125,9 @@ const Rejecter = () => {
   const addressOnBlurHandler = () => {
     dispatch({ type: 'ADDRESS', isValid: addressRef.current.value.trim().length > 0 });
   };
+
   const nameOnBlurHandler = () => {
-    dispatch({ type: 'NAME', isValid: addressRef.current.value.trim().length > 0 });
+    dispatch({ type: 'NAME', isValid: nameRef.current.value.trim().length > 0 });
   };
 
   
@@ -138,56 +145,90 @@ const Rejecter = () => {
         }),
       });
       if (!response.ok) {
-        /// show error message
-        throw new Error('Sending OTP failed');
+        console.log("response.status : ", response.status)
+        if(response.status === 409){
+          setModelMessage('Email is registered, Try to login')          
+        }
+        else{
+          setModelMessage('Sending OTP failed, Please Try Again' )
+        }        
+        setIsLoading(false)
+        return
       }
       
+      // save in local storage
       localStorage.setItem('name', nameRef.current.value);
       localStorage.setItem('email', emailRef.current.value);
       localStorage.setItem('password', passwordRef.current.value);
       localStorage.setItem('address', addressRef.current.value);
       localStorage.setItem('phone', phoneRef.current.value);
-      
-      setError('');
-      console.log('OTP sent successfully');      
+        
       setIsLoading(false);
       setShowOtpInput(true)
     } catch (error) {
       console.error('Error:', error.message);
-      setError('Sending OTP failed. Please try again.');
+      // setError('Sending OTP failed. Please try again.');
+      setShowMessageModal('Sending OTP failed. Please try again.')
       setIsLoading(false);
     }
   };
+
+
+  // 
   const handleOtpSubmit = async (otp) => {
+    setIsLoading(true)
     if (otp.length !== 6){
-      console.log('Enter Valid OTP')
+      setIsValidOTP(false)
       return 
     }
 
-    
+    const body = {
+      name: nameRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+      address: addressRef.current.value,
+      mobile: addressRef.current.value,
+      otp: otp
+    }
+    console.log(body)
     const response = await makeHTTP('/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        name: nameRef.current.value,
-        email: emailRef.current.value,
-        password: passwordRef.current.value,
-        address: addressRef.current.value,
-        phone: addressRef.current.value,
-        otp: otp
-      }),
+      body: JSON.stringify(body),
     })
     if (!response.ok) {
-      // Show Message Wrong OTP
-      setIsValidOTP(false)
-      console.log('InValid OTP')
+      console.log("response.status : ", response.status)
+      if(response.status === 409){
+        setModelMessage('Email is registered, Try to login')          
+      }
+      else if (response.status === 401){
+        setShowMessageModal('Invalid OTP')
+      }
+      else{
+        setModelMessage('Sending OTP failed, Please Try Again' )
+      }        
+      
+      setIsValidOTP(false)      
+      setIsLoading(false)
+      
+      return
     }
-    else { 
-      // show email created successfully
-      console.log('email created successfully')
-    }
+      
+    // console.log('response.status ', response.status)
+     /// ok , registered
+     setShowOtpInput(false)
+     console.log('close loading ')
+     setIsLoading(false)
+     console.log('Showing Success Message')
+     setModelMessage('Account created successfully')
+
+     setTimeout(()=>{
+        navigate('/login')
+
+     }, 3000)
+    
     
 };
 
@@ -199,6 +240,11 @@ const handleCancelMessage = ()=>{
     navigate('/login');
   };
 
+  console.log('modelMessage : ', modelMessage)
+
+  const cancelMessageModal = ()=> { 
+    setModelMessage(false)
+  }
   return (
     <div className="signup-container">
       {isLoading && <Loading />}
@@ -212,7 +258,7 @@ const handleCancelMessage = ()=>{
             type="text"
             onBlur={nameOnBlurHandler}
             ref={nameRef}
-            className={!state.isValidEmail ? 'invalid' : ''}
+            className={!state.isValidName ? 'invalid' : ''}
           />
         </div>        
         <div>
@@ -281,6 +327,11 @@ const handleCancelMessage = ()=>{
                 />
             </MessageOverlay>
         )}
+        {
+          modelMessage && (
+            <MessageModal message={modelMessage} onCancel={cancelMessageModal}/>
+          )
+        }
     </div>
   );
 };

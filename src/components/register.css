@@ -10,7 +10,7 @@
 .signup-container {
     max-width: 450px;
     margin: 100px auto;
-    height: 75vh;
+    height: 80vh;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -43,7 +43,7 @@
     border-color: #FF474C
 }
 
-.signup-container form button {
+.signup-container form .btn {
     padding: 12px 20px;
     background-color: #57cc99;
     color: #fff;
@@ -53,6 +53,9 @@
     font-size: 16px;
     transition: background-color 0.3s ease;
     margin-top: 30px;
+    margin-right: 20px;
+
+    
 }
 
 .signup-container form .forget-password {
@@ -62,7 +65,7 @@
     color: #555; 
 }
 
-.signup-container form button:hover {
+.signup-container form .btn:hover {
     background-color: #2aad74;
 }
 
@@ -71,9 +74,6 @@
     cursor: not-allowed;
 }
 
-.signup-container .btn {
-    margin-bottom: 20px;
-}
 
 .signup-container .sign-up {
     display: flex;
@@ -95,19 +95,12 @@
     .signup-container form input {
         padding: 11px;
     }
-    /*     padding: 12px 20px;
-    background-color: #57cc99;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    margin-top: 30px; */
-    .signup-container form button {
+
+    
+    .signup-container form .btn {
         font-size: 14px;
         width: 80%;
-        margin-left: 18px;
-        z-index: -1;
+        margin-left: 20px;        
+        cursor: pointer;
     }
 }

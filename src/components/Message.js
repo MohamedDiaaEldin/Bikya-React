@@ -14,8 +14,8 @@ const Message = ({ text, onClick, onCancel, isValidOTP }) => {
     return (
         <div className={'message'}>
             
-            <p>{text}</p>         
-                <div >
+            <p >{text}</p>         
+                <div className='up'>
                     <input
                         type="text"
                         placeholder="Enter OTP"

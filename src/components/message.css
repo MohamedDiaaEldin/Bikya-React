@@ -31,10 +31,10 @@
     border-radius: 5px;
 
 }
-.message p {
+.message p{
     margin-bottom: 15px; /* Add margin to the bottom of the paragraph */
     font-size: 16px; /* Adjust the font size */
-    color: #333; /* Set text color */
+    color: #333  ; 
 }
 .message button {
     margin-right: 10px; /* Add margin between buttons */
@@ -66,6 +66,11 @@
 .none { 
     display: none;
 }
+
+.up{
+    z-index: 4;
+}
+
 p.error { 
     color: red;
     position: absolute;
