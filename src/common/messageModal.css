@@ -1,0 +1,46 @@
+.message-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-align: center; /* Center align the text */
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.message p {
+    margin-bottom: 15px; /* Add margin to the bottom of the paragraph */
+    margin-top: 10px;
+    font-size: 16px; /* Adjust the font size */
+    color: #209763; /* Set text color */
+}
+
+.cancel-button {
+    padding: 10px 20px;
+    background-color: #f44336; /* Red */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 5px; /* Add border radius */
+    cursor: pointer; /* Change cursor on hover */
+    width: 100px;
+    align-self: flex-end;
+}
+
+.cancel-button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+
