@@ -3,13 +3,14 @@ import Home from "./components/Home";
 import Main from "./components/Main";
 import Login from "./components/Login";
 import Rejecter from "./components/Register";
-import { AuthenticationContextProvider, useAuthAppContext } from "./AuthenticationContextProvider";
-import { useState } from "react";
+import ForgotPassword from "./components/ForgotPassword";
+import NewPassword from "./components/NewPassword";
+
+import { AuthenticationContextProvider } from "./AuthenticationContextProvider";
+
 // 
 
 function App() {
-  const {isLoggedIn} = useAuthAppContext()
-  const [isLoading, setIsLoading] = useState(false)
   
   return (
     <AuthenticationContextProvider>
@@ -17,7 +18,9 @@ function App() {
         <Route path="/" element={<Home/>} />        
         <Route path="/login" element={<Login/>}/>
         <Route path='/main' element={<Main/>} />
-        <Route path='/rejecter' element={<Rejecter/>} />
+        <Route path='/register' element={<Rejecter/>} />
+        <Route path='/forget' element={<ForgotPassword/>} />
+        <Route path='/new-password' element={<NewPassword/>} />
 
       </Routes>
       
