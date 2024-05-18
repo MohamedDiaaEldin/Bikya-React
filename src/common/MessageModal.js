@@ -12,7 +12,7 @@ const MessageModal = ({ message, onCancel }) => {
 
     return (
         <div className="message-overlay" onClick={handleOverlayClick}>
-            <div className="message">
+            <div className="message" onClick={(event)=> event.stopPropagation()}>
                 <p className='text'>{message}</p>
                 <button className="cancel-button" onClick={handleCancelButtonClick}>
                     Close
