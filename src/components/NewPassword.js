@@ -67,7 +67,7 @@ const NewPassword = () => {
         }                
         setModalMessage('Password Updated Successfully')
         setTimeout(()=>{
-            navigate('/new-password')
+            navigate('/login')
         }, 3000)
         
     }
