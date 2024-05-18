@@ -6,6 +6,8 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Loading from '../common/Loading';
 import makeHTTP from '../utils/httpRequest';
+import MessageModal from '../common/MessageModal'
+
 const initialState = {
     isValidPassword: false,
     isValidUserName: false
@@ -30,6 +32,8 @@ function Login() {
     const passwordRef = useRef('');
     const navigate = useNavigate();
 
+    //
+    const [messageModal, setMessageModal] = useState(false)
     useEffect(() => {
         if (isLoggedIn) {
             navigate('/');
@@ -64,7 +68,14 @@ function Login() {
         makeHTTP('/login', options)
             .then(response => {
                 if (!response.ok) {
-                    console.log('Wrong Email or Password');
+                    if (response.status === 401){
+                        console.log('Wrong Email or Password, Please try again');
+                        setMessageModal('Wrong Email or Password, Please try again')
+                    }
+                    else{
+                        console.log('Wrong Email or Password, Please try again')
+                        setMessageModal('Error Accrued, Please try again')
+                    }
                 } else {
                     console.log('Correct Credentials');
                     setIsLoggedIn(true);
@@ -81,6 +92,9 @@ function Login() {
     const backClickHandler = () => {
         navigate('/');
     };
+    const cancelMessageModal = ()=> { 
+        setMessageModal(false)
+    }
 
     return (
         <div className="login-container">
@@ -108,13 +122,19 @@ function Login() {
                         onBlur={handlePasswordBlur}
                     />
                 </div>
-                <a className='forget-password' href="">Forget Password?</a>
+                <a className='forget-password' href="/forget">Forget Password?</a>
                 <button className='login' disabled={!isValidForm} type="submit">Login</button>
                 <div className='sign-up'>
                     <p>Don't have account ?</p>
-                    <a href="/rejecter">sign up</a>
+                    <a href="/register">sign up</a>
                 </div>
             </form>
+
+            {
+          messageModal && (
+            <MessageModal message={messageModal} onCancel={cancelMessageModal}/>
+          )
+        }
         </div>
     );
 }
