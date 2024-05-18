@@ -7,15 +7,8 @@ import Loading from '../common/Loading';
 import { useNavigate } from 'react-router-dom';
 import Message from './Message';
 import MessageModal from '../common/MessageModal';
+import Overlay from '../common/Overlay';
 
-
-const MessageOverlay = ({ children }) => {
-  return (
-      <div className="message-overlay">
-          {children}
-      </div>
-  );
-};
 
 const initialState = {
   isValidName: false,
@@ -49,7 +42,6 @@ const Rejecter = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
   // 
   const navigate = useNavigate();
   // 
@@ -311,21 +303,20 @@ const handleCancelMessage = ()=>{
             className={!state.isValidPhone ? 'invalid' : ''}
           />
         </div>
-        {error && <p className="error-message">{error}</p>}
         <button className="btn" disabled={!isValidForm} type="button" onClick={handleSignup}>
           Sign Up
         </button>
 
       </form>
         {showOtpInput && (
-            <MessageOverlay>
+            <Overlay>
                 <Message                    
                     text="An OTP has been sent to your email. Please enter it below."                 
                     onClick={handleOtpSubmit}         
                     onCancel={handleCancelMessage}   
                     isValidOTP={isValidOTP}        
                 />
-            </MessageOverlay>
+            </Overlay>
         )}
         {
           modelMessage && (
