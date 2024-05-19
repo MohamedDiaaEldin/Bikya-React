@@ -1,0 +1,14 @@
+
+
+/* ProductList.css */
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding: 16px;
+    margin: 150px auto;
+    max-width: 1200px;
+    min-height: 100vh;
+  }
+  
