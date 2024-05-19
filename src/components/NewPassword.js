@@ -40,36 +40,47 @@ const NewPassword = () => {
     console.log(state)
 
     const changePasswordHandler = async (event)=> { 
-        event.preventDefault()
-        event.target.querySelector('.btn').blur();
-        
-
-        console.log('Sending http request with new password ... ')        
-        setIsLoading(true)
-        
-        const response = await makeHTTP('/password', {
-            method: 'UPDATE',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: localStorage.getItem('email'),
-              newPassword : passwordRef.current.value,
-              otp : otpRef.current.value,
-            }),
-        })
-        setIsLoading(false)
-        console.log(response.status)
-        
-        if ( !response.ok) {             
+        try{    
+            event.preventDefault()
+            event.target.querySelector('.btn').blur();
+            
+    
+            console.log('Sending http request with new password ... ')        
+            setIsLoading(true)
+            console.log({
+                email: localStorage.getItem('email'),
+                newPassword : passwordRef.current.value,
+                otp : otpRef.current.value,
+                })
+            const response = await makeHTTP('/password', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: localStorage.getItem('email'),
+                    password : passwordRef.current.value,
+                    otp : otpRef.current.value,
+                }),
+            })
+            setIsLoading(false)
+            console.log(response.status)
+            
+            if ( !response.ok) {             
+                setModalMessage('Error Accrued Please Try Again')
+                return
+            }                
+            localStorage.removeItem('email')
+            setModalMessage('Password Updated Successfully')
+            setTimeout(()=>{
+                navigate('/login')
+            }, 3000)
+            
+        }
+        catch(error){
+            setIsLoading(false)
             setModalMessage('Error Accrued Please Try Again')
-            return
-        }                
-        setModalMessage('Password Updated Successfully')
-        setTimeout(()=>{
-            navigate('/login')
-        }, 3000)
-        
+        }
     }
 
     const otpChangeHandler = ()=> {         
@@ -87,7 +98,7 @@ const NewPassword = () => {
     }
     
     return (
-        <div className="container">
+        <div className="new-pass-container">
                  {isLoading && <Loading />}
                 <form onSubmit={ changePasswordHandler} className="form-container">
                     <h2>New Password</h2>
@@ -121,7 +132,7 @@ const NewPassword = () => {
                             className={!state.isValidConfirmPassword ? 'invalid' : ''}
                         />
                     </div>
-                    <button type='submit' className="btn" disabled={!isValidForm}>Send OTP</button>
+                    <button type='submit' className="btn" disabled={!isValidForm}>Change Password</button>
                 </form>
                 
              {
