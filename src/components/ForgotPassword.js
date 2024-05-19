@@ -20,30 +20,40 @@ const ForgotPassword = () => {
     };
    
     const sendOTPHandler = async (event)=> { 
-        event.preventDefault()
-        event.target.querySelector('.btn').blur();
-
-
-        console.log('Sending OTP ... ')
-        setIsLoading(true)
-        const response = await makeHTTP('/otp', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: email,
-            }),
-        })
-        setIsLoading(false)
-        console.log(response.status)
-        
-        if (response.status === 500) {             
+        try{
+            event.preventDefault()
+            event.target.querySelector('.btn').blur();
+    
+    
+            console.log('Sending OTP ... ')
+            setIsLoading(true)
+            const response = await makeHTTP('/otp', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  email: email,
+                }),
+            })
+            setIsLoading(false)
+            console.log(response.status)
+            
+            if (response.status === 500) {             
+                setModalMessage('Error Accrued Please Try Again')
+                return
+            }                
+            // Save Email To localStorage
+            localStorage.setItem('email', email)
+            navigate('/new-password')
+            
+        }
+        catch(error){
+            isLoading(false)
+            console.log('Error Accrued While Sending OTP, Error: ', error)
             setModalMessage('Error Accrued Please Try Again')
-            return
-        }                
-        navigate('/new-password')
-        
+
+        }
     }
     const cancelModalHandler = ()=> { 
         setModalMessage(false)
