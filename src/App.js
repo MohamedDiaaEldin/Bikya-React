@@ -5,13 +5,13 @@ import Login from "./components/Login";
 import Rejecter from "./components/Register";
 import ForgotPassword from "./components/ForgotPassword";
 import NewPassword from "./components/NewPassword";
-
+import Products from "./common/Products";
 import { AuthenticationContextProvider } from "./AuthenticationContextProvider";
 
 // 
 
 function App() {
-  
+
   return (
     <AuthenticationContextProvider>
       <Routes>
@@ -21,6 +21,7 @@ function App() {
         <Route path='/register' element={<Rejecter/>} />
         <Route path='/forget' element={<ForgotPassword/>} />
         <Route path='/new-password' element={<NewPassword/>} />
+        <Route path='/products' element={<Products/>} />
 
       </Routes>
       
